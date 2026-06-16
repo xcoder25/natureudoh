@@ -16,6 +16,7 @@ import Testimonials from './components/Testimonials';
 import ReservationForm from './components/ReservationForm';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ChatBot from './components/ChatBot';
 import { MessageSquare } from 'lucide-react';
 
 export default function App() {
@@ -81,6 +82,9 @@ export default function App() {
       </main>
 
       <Footer onQuickLinkClick={scrollToSection} />
+
+      {/* Floating AI Chat Assistant Widget */}
+      <ChatBot />
 
       {/* Floating WhatsApp button — above bottom nav on mobile */}
       <a

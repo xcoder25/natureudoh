@@ -21,7 +21,7 @@ export default function Contact() {
       icon: MapPin,
       title: 'Sanctuary Address',
       content: (
-        <span>Plot 15, Royal Forest Garden Drive,<br />Outer Circle Road, Lekki Phase 1,<br />Lagos, Nigeria.</span>
+        <span>139 Akpan Isemin Avenue,<br />Ewet Housing Estate,<br />Uyo 520101, Akwa Ibom, Nigeria.</span>
       ),
     },
     {
@@ -145,7 +145,7 @@ export default function Contact() {
             <iframe
               id="google-maps-frame"
               title="Nature Udoh and The Gang Sanctuary Map Location"
-              src="https://maps.google.com/maps?q=Lekki%20Conservation%20Centre,%20Lekki,%20Lagos&t=&z=14&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?q=139%20Akpan%20Isemin%20Avenue,%20Ewet%20Housing%20Estate,%20Uyo&t=&z=14&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               className="w-full h-full border-0 filter grayscale contrast-125 brightness-[0.7] invert-[0.9] hue-rotate-[110deg]"

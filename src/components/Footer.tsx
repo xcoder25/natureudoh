@@ -101,7 +101,7 @@ export default function Footer({ onQuickLinkClick }: FooterProps) {
               Inquiries
             </h4>
             <div className="font-sans text-sm text-cream-dark/80 space-y-3 leading-relaxed">
-              <p><strong className="text-cream">HQ Address:</strong><br />Plot 15, Royal Forest Garden, Lekki Phase 1, Lagos.</p>
+              <p><strong className="text-cream">HQ Address:</strong><br />139 Akpan Isemin Avenue, Ewet Housing Estate, Uyo 520101, Akwa Ibom.</p>
               <p><strong className="text-cream">Telephone:</strong><br />+234 803 123 4567</p>
               <p><strong className="text-cream">Mailbox:</strong><br />reservations@natureudohandgang.com</p>
             </div>
@@ -163,7 +163,7 @@ export default function Footer({ onQuickLinkClick }: FooterProps) {
               title: 'Contact Info',
               content: (
                 <div className="font-sans text-xs text-cream-dark/75 space-y-2.5 pt-3 leading-relaxed">
-                  <p><strong className="text-cream">Address:</strong> Plot 15, Royal Forest Garden, Lekki Phase 1, Lagos.</p>
+                  <p><strong className="text-cream">Address:</strong> 139 Akpan Isemin Avenue, Ewet Housing Estate, Uyo 520101, Akwa Ibom.</p>
                   <p><strong className="text-cream">Phone:</strong> +234 803 123 4567</p>
                   <p><strong className="text-cream">Email:</strong> reservations@natureudohandgang.com</p>
                 </div>
@@ -188,7 +188,7 @@ export default function Footer({ onQuickLinkClick }: FooterProps) {
         {/* Bottom copyright */}
         <div className="pt-6 border-t border-cream/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <p className="font-sans text-[10px] sm:text-xs text-cream/40">
-            &copy; {new Date().getFullYear()} Nature Udoh and The Gang. All rights reserved. Registered Trademark in Lagos, Nigeria.
+            &copy; {new Date().getFullYear()} Nature Udoh and The Gang. All rights reserved. Registered Trademark in Uyo, Akwa Ibom, Nigeria.
           </p>
           <p className="font-sans text-[10px] sm:text-xs text-cream/30 flex items-center gap-1 justify-center">
             Crafted with <Heart className="w-3 h-3 text-accent-gold fill-accent-gold animate-pulse" /> for premium al-fresco lovers.

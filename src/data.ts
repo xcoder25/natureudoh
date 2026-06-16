@@ -150,7 +150,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 'm6',
     name: 'Spicy Fire-Wood Party Jollof',
-    description: 'Lekki-style smoky wood-fire Rice. Served with a crispy quarter charcoal chicken, spicy sweet plantain dodo and garden salad.',
+    description: 'Uyo-style smoky wood-fire Rice. Served with a crispy quarter charcoal chicken, spicy sweet plantain dodo and garden salad.',
     price: '$22.00',
     category: 'local',
     image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=500&q=80',

@@ -92,7 +92,7 @@ export default function Hero({ onOpenBooking, onViewMenu }: HeroProps) {
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.55 }}
           className="font-sans text-sm sm:text-lg text-cream-dark/85 leading-relaxed max-w-xl mb-8 sm:mb-10 text-balance"
         >
-          Where Great Food, Live Entertainment, Premium Drinks, and Unforgettable Moments Come Together in Lekki, Lagos.
+          Where Great Food, Live Entertainment, Premium Drinks, and Unforgettable Moments Come Together in Uyo, Akwa Ibom.
         </motion.p>
 
         {/* CTA Buttons */}
