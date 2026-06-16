@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #1B4332;
+  --color-forest-dark: #0e231b;
+  --color-forest-light: #2d5a46;
+  --color-cream: #F8F5E9;
+  --color-cream-dark: #eee9d4;
+  --color-accent-gold: #D4A017;
+  --color-accent-gold-light: #eac559;
+  --color-charcoal: #1E1E1E;
+  
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-serif-cormorant: "Cormorant Garamond", Georgia, serif;
+}
+
+/* Custom scrollbar and premium styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0e231b;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4A017;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #eac559;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #F8F5E9 0%, #D4A017 50%, #fcd34d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gold-metallic {
+  background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-gold-gradient {
+  border-image: linear-gradient(to right, #bf953f, #fcf6ba, #b38728) 1;
+}

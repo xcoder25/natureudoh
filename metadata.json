@@ -1,0 +1,6 @@
+{
+  "name": "Nature Udoh and The Gang",
+  "description": "A premium landscape-inspired restaurant, lounge, grill, barbecue, and event venue featuring exceptional food, refreshments, live music, and unforgettable social gatherings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
