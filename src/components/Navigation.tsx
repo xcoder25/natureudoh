@@ -86,9 +86,9 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Brand Logo */}
-            <a href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="flex items-center space-x-2 group">
-              <div className="relative p-2 bg-accent-gold rounded-xl group-hover:bg-accent-gold-light transition-colors duration-300 pulse-gold">
-                <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-forest-dark" />
+            <a href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="flex items-center space-x-3 group">
+              <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border border-accent-gold/45 pulse-gold flex-shrink-0 bg-forest-dark">
+                <img src="/nature.png" alt="Nature Udoh & The Gang Logo" className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-300" />
               </div>
               <div className="flex flex-col">
                 <span className="font-serif text-base sm:text-xl font-bold text-cream tracking-wider leading-none uppercase">
@@ -169,9 +169,9 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
             >
               {/* Drawer Header */}
               <div className="flex justify-between items-center px-6 py-5 border-b border-cream/10">
-                <div className="flex items-center space-x-2">
-                  <div className="p-1.5 bg-accent-gold rounded-lg">
-                    <Flame className="w-4 h-4 text-forest-dark" />
+                <div className="flex items-center space-x-2.5">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-accent-gold/40 flex-shrink-0 bg-forest-dark">
+                    <img src="/nature.png" alt="Logo" className="w-full h-full object-cover rounded-full" />
                   </div>
                   <span className="font-serif text-sm font-bold text-cream tracking-wide uppercase">
                     Nature Udoh

@@ -46,12 +46,12 @@ export default function Footer({ onQuickLinkClick }: FooterProps) {
         <div className="mb-8 sm:mb-10">
           <button
             onClick={() => onQuickLinkClick('#home')}
-            className="flex items-center gap-2.5 group mb-4 focus:outline-none"
+            className="flex items-center gap-3 group mb-4 focus:outline-none"
           >
-            <div className="p-2 bg-accent-gold rounded-xl group-hover:bg-accent-gold-light transition-colors">
-              <Flame className="w-5 h-5 text-forest-dark" />
+            <div className="relative w-10 h-10 rounded-full overflow-hidden border border-accent-gold/40 flex-shrink-0 bg-forest-dark">
+              <img src="/nature.png" alt="Logo" className="w-full h-full object-cover rounded-full" />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col text-left">
               <span className="font-serif text-base font-bold tracking-wider leading-none uppercase text-cream">Nature Udoh</span>
               <span className="font-sans text-[10px] text-accent-gold-light tracking-[0.2em] leading-none mt-0.5 font-semibold">& THE GANG</span>
             </div>
