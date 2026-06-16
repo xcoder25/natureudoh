@@ -5,144 +5,129 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { MapPin, Phone, Mail, MessageSquare, Instagram, Facebook, Youtube, Share2, Compass } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageSquare, Instagram, Facebook, Youtube, Compass } from 'lucide-react';
 
 export default function Contact() {
   const socialLinks = [
-    { icon: Instagram, label: 'Instagram', href: 'https://instagram.com/natureudoh_gang' },
-    { icon: Facebook, label: 'Facebook', href: 'https://facebook.com/natureudoh_gang' },
-    { icon: Youtube, label: 'YouTube', href: 'https://youtube.com/natureudoh_gang' },
+    { icon: Instagram, label: 'Instagram', href: 'https://instagram.com/natureudoh_gang', color: '#E1306C' },
+    { icon: Facebook, label: 'Facebook', href: 'https://facebook.com/natureudoh_gang', color: '#1877F2' },
+    { icon: Youtube, label: 'YouTube', href: 'https://youtube.com/natureudoh_gang', color: '#FF0000' },
   ];
 
-  // WhatsApp connection pre-filled URL
   const whatsappUrl = `https://wa.me/2348031234567?text=Hello%20Nature%20Udoh%20and%20The%20Gang!%20I'd%20love%20to%20reserve%20a%20table%20or%20inquire%20about%20hosting%20an%20event%20with%20you.`;
 
-  return (
-    <section id="contact" className="py-24 sm:py-32 bg-forest-dark relative overflow-hidden">
-      {/* Decorative details */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-forest-light/5 rounded-full filter blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent-gold/5 rounded-full filter blur-[100px] pointer-events-none" />
+  const contactItems = [
+    {
+      icon: MapPin,
+      title: 'Sanctuary Address',
+      content: (
+        <span>Plot 15, Royal Forest Garden Drive,<br />Outer Circle Road, Lekki Phase 1,<br />Lagos, Nigeria.</span>
+      ),
+    },
+    {
+      icon: Phone,
+      title: 'Call / Inquiries',
+      content: <span>+234 (0) 803 123 4567<br />+234 (0) 902 987 6543</span>,
+    },
+    {
+      icon: Mail,
+      title: 'Electronic Mail',
+      content: <span>reservations@natureudohandgang.com<br />events@natureudohandgang.com</span>,
+    },
+  ];
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
+  return (
+    <section id="contact" className="py-16 sm:py-28 bg-forest-dark relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-80 h-80 bg-forest-light/5 rounded-full filter blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-accent-gold/5 rounded-full filter blur-[100px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
+
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="font-sans text-xs sm:text-sm font-bold tracking-[0.3em] text-accent-gold uppercase"
+            className="section-label mx-auto"
           >
+            <Compass className="w-3 h-3" />
             Locate The Gang
-          </motion.span>
+          </motion.div>
           <motion.h2
             id="contact-heading"
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-serif text-3xl sm:text-5xl font-bold text-cream tracking-tight mt-3 mb-6"
+            className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-cream tracking-tight mt-2 mb-3"
           >
             Connect With Our Sanctuary
           </motion.h2>
-          <div className="w-24 h-0.5 bg-accent-gold mx-auto" />
+          <div className="section-divider" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-          
-          {/* Left Side: Contact details (5 cols on lg) */}
-          <div className="lg:col-span-5 text-left space-y-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+
+          {/* Left: Contact Details */}
+          <div className="lg:col-span-5 space-y-8">
             <div>
-              <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-cream mb-6">
-                Nature Udoh & The Gang HQ
-              </h3>
-              <p className="font-sans text-cream-dark/85 leading-relaxed">
-                Step away from the city noise and join us. Reach our team directly for table bookings, personalized birthday configurations, and private event packages.
+              <h3 className="font-serif text-xl sm:text-2xl font-semibold text-cream mb-3">Nature Udoh &amp; The Gang HQ</h3>
+              <p className="font-sans text-sm text-cream-dark/80 leading-relaxed">
+                Reach our team for table bookings, birthday configurations, and private event packages.
               </p>
             </div>
 
-            {/* Practical details blocks */}
-            <div className="space-y-6">
-              
-              <div className="flex items-start space-x-4">
-                <div className="p-3 bg-forest rounded-xl border border-accent-gold/20 text-accent-gold shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-sans font-bold text-sm text-cream uppercase tracking-wider mb-1">
-                    Sanctuary Address
-                  </h4>
-                  <p className="font-sans text-xs sm:text-sm text-cream-dark/90 leading-relaxed font-medium">
-                    Plot 15, Royal Forest Garden Drive,<br />
-                    Outer Circle Road, Lekki Phase 1,<br />
-                    Lagos, Nigeria.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="p-3 bg-forest rounded-xl border border-accent-gold/20 text-accent-gold shrink-0">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-sans font-bold text-sm text-cream uppercase tracking-wider mb-1">
-                    Call / Inquiries
-                  </h4>
-                  <p className="font-sans text-xs sm:text-sm text-cream-dark/90 font-medium">
-                    +234 (0) 803 123 4567<br />
-                    +234 (0) 902 987 6543
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="p-3 bg-forest rounded-xl border border-accent-gold/20 text-accent-gold shrink-0">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-sans font-bold text-sm text-cream uppercase tracking-wider mb-1">
-                    Electronic Mail
-                  </h4>
-                  <p className="font-sans text-xs sm:text-sm text-cream-dark/90 font-medium">
-                    reservations@natureudohandgang.com<br />
-                    events@natureudohandgang.com
-                  </p>
-                </div>
-              </div>
+            {/* Contact cards — horizontal scrollable on mobile, stack on desktop */}
+            <div className="flex flex-col gap-4">
+              {contactItems.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="flex items-start gap-4 p-4 glass-card rounded-2xl border border-cream/5"
+                >
+                  <div className="p-2.5 bg-forest rounded-xl border border-accent-gold/20 text-accent-gold shrink-0">
+                    <item.icon className="w-4.5 h-4.5" />
+                  </div>
+                  <div>
+                    <h4 className="font-sans font-bold text-xs text-cream uppercase tracking-wider mb-1">{item.title}</h4>
+                    <p className="font-sans text-xs sm:text-sm text-cream-dark/85 leading-relaxed">{item.content}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
-            {/* WhatsApp Integration Block */}
-            <div className="pt-6 border-t border-cream/10">
-              <h4 className="font-sans font-bold text-xs uppercase tracking-widest text-cream/40 mb-4 block">
-                Instant Chat Channels
-              </h4>
+            {/* WhatsApp CTA */}
+            <div className="pt-4 border-t border-cream/10">
+              <h4 className="font-sans text-xs font-bold uppercase tracking-widest text-cream/40 mb-3">Instant Chat</h4>
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
                 id="btn-whatsapp-chat"
-                className="inline-flex items-center space-x-3 bg-[#25D366] hover:bg-[#20ba56] text-white font-sans font-bold text-sm sm:text-md py-3.5 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 active:translate-y-0"
+                className="flex items-center justify-center gap-3 w-full bg-[#25D366] hover:bg-[#20ba56] text-white font-sans font-bold text-sm py-4 px-6 rounded-2xl shadow-lg transition-all touch-active active:scale-97 cursor-pointer"
+                style={{ boxShadow: '0 6px 24px rgba(37,211,102,0.35)' }}
               >
                 <MessageSquare className="w-5 h-5 shrink-0" />
                 <span>Chat directly on WhatsApp</span>
               </a>
             </div>
 
-            {/* Social channels */}
-            <div className="pt-6 border-t border-cream/10">
-              <h4 className="font-sans font-bold text-xs uppercase tracking-widest text-cream/40 mb-4 block">
-                The Gang Online Presence
-              </h4>
-              <div className="flex space-x-3">
-                {socialLinks.map((social, sIdx) => (
+            {/* Social icons */}
+            <div className="pt-4 border-t border-cream/10">
+              <h4 className="font-sans text-xs font-bold uppercase tracking-widest text-cream/40 mb-3">Follow The Gang</h4>
+              <div className="flex gap-3">
+                {socialLinks.map((social, i) => (
                   <a
-                    key={sIdx}
+                    key={i}
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-3 bg-forest hover:bg-accent-gold text-cream hover:text-forest-dark border border-cream/5 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center cursor-pointer hover:-translate-y-1"
                     aria-label={social.label}
+                    className="p-3 bg-forest hover:bg-accent-gold text-cream hover:text-forest-dark border border-cream/10 rounded-xl transition-all duration-250 hover:-translate-y-1 cursor-pointer"
                   >
                     <social.icon className="w-5 h-5" />
                   </a>
@@ -151,30 +136,24 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Right Side: Embedded Map layout (7 cols on lg) */}
-          <div className="lg:col-span-7 w-full h-[450px] lg:h-[550px] relative rounded-3xl overflow-hidden border border-cream/10 shadow-2xl p-1 bg-cream/5">
-            {/* Ambient gold pin indicator */}
-            <div className="absolute top-4 left-4 z-20 bg-forest-dark/90 px-4 py-2 border border-accent-gold/40 rounded-xl backdrop-blur-md flex items-center space-x-2 text- cream text-xs font-bold leading-none shadow-lg">
-              <Compass className="w-4 h-4 text-accent-gold" />
-              <span className="font-sans uppercase text-cream tracking-wider">
-                Interactive Garden Map
-              </span>
+          {/* Right: Map */}
+          <div className="lg:col-span-7 w-full h-[300px] sm:h-[420px] lg:h-[520px] relative rounded-2xl sm:rounded-3xl overflow-hidden border border-cream/10 shadow-2xl">
+            <div className="absolute top-3 left-3 z-20 glass-card-gold px-3 py-2 rounded-xl flex items-center gap-2 shadow-lg">
+              <Compass className="w-3.5 h-3.5 text-accent-gold" />
+              <span className="font-sans text-[10px] sm:text-xs font-bold text-cream tracking-wider uppercase">Interactive Map</span>
             </div>
-
-            {/* Highly stylized OpenStreetMap Iframe to match luxury green/dark theme */}
             <iframe
               id="google-maps-frame"
               title="Nature Udoh and The Gang Sanctuary Map Location"
               src="https://maps.google.com/maps?q=Lekki%20Conservation%20Centre,%20Lekki,%20Lagos&t=&z=14&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
-              className="w-full h-full border-0 rounded-2xl filter grayscale contrast-125 brightness-[0.7] invert-[0.9] hue-rotate-[110deg]"
-              allowFullScreen={true}
+              className="w-full h-full border-0 filter grayscale contrast-125 brightness-[0.7] invert-[0.9] hue-rotate-[110deg]"
+              allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
-
         </div>
       </div>
     </section>

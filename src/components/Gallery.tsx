@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, Eye, Image as ImageIcon, X } from 'lucide-react';
 import { galleryData } from '../data';
@@ -11,100 +11,98 @@ import { galleryData } from '../data';
 export default function Gallery() {
   const [filter, setFilter] = useState<'all' | 'food' | 'drinks' | 'lounge' | 'events'>('all');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
   const categories = [
-    { value: 'all', label: 'All Photos' },
-    { value: 'food', label: 'Feasts & Grills' },
-    { value: 'drinks', label: 'Cocktails' },
-    { value: 'lounge', label: 'Green Lounge' },
-    { value: 'events', label: 'Gatherings' }
+    { value: 'all', label: 'All', emoji: '✨' },
+    { value: 'food', label: 'Feasts', emoji: '🔥' },
+    { value: 'drinks', label: 'Cocktails', emoji: '🍹' },
+    { value: 'lounge', label: 'Lounge', emoji: '🌿' },
+    { value: 'events', label: 'Events', emoji: '🎉' },
   ];
 
-  const filteredItems = filter === 'all' 
-    ? galleryData 
-    : galleryData.filter(item => item.category === filter);
+  const filteredItems = filter === 'all' ? galleryData : galleryData.filter(item => item.category === filter);
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (lightboxIndex === null) return;
-    setLightboxIndex(prev => {
-      if (prev === null) return null;
-      return prev === 0 ? filteredItems.length - 1 : prev - 1;
-    });
+    setLightboxIndex(prev => prev === null ? null : prev === 0 ? filteredItems.length - 1 : prev - 1);
   };
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (lightboxIndex === null) return;
-    setLightboxIndex(prev => {
-      if (prev === null) return null;
-      return prev === filteredItems.length - 1 ? 0 : prev + 1;
-    });
+    setLightboxIndex(prev => prev === null ? null : prev === filteredItems.length - 1 ? 0 : prev + 1);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      diff > 0 ? setLightboxIndex(prev => prev === null ? null : prev === filteredItems.length - 1 ? 0 : prev + 1)
+               : setLightboxIndex(prev => prev === null ? null : prev === 0 ? filteredItems.length - 1 : prev - 1);
+    }
+    touchStartX.current = null;
   };
 
   return (
-    <section id="gallery" className="py-24 sm:py-32 bg-forest relative overflow-hidden">
-      {/* Visual background details */}
-      <div className="absolute top-1/4 left-0 w-80 h-80 bg-forest-dark/20 rounded-full filter blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] bg-accent-gold/5 rounded-full filter blur-[150px] pointer-events-none" />
+    <section id="gallery" className="py-16 sm:py-28 bg-forest relative overflow-hidden">
+      <div className="absolute top-1/4 left-0 w-72 h-72 bg-forest-dark/20 rounded-full filter blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-accent-gold/5 rounded-full filter blur-[130px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
+
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-forest-dark/50 border border-accent-gold/30 mb-4"
+            className="section-label mx-auto"
           >
-            <ImageIcon className="w-3.5 h-3.5 text-accent-gold" />
-            <span className="font-sans text-xs font-semibold text-cream uppercase tracking-wider">
-              Visual Narrative
-            </span>
+            <ImageIcon className="w-3 h-3" />
+            Visual Narrative
           </motion.div>
           <motion.h2
             id="gallery-heading"
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="font-serif text-3xl sm:text-5xl font-bold text-cream tracking-tight mb-6"
+            className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-cream tracking-tight mt-2 mb-3"
           >
-            Glimpses of Nature & The Gang
+            Glimpses of Nature &amp; The Gang
           </motion.h2>
-          <p className="font-sans text-sm sm:text-md text-cream-dark/85">
-            Step visually into our sanctuary. Browse real captures of smoky grills, refreshing mixology cups, private spaces, and laughing crowds.
+          <p className="font-sans text-sm text-cream-dark/80">
+            Step visually into our sanctuary. Real captures of smoky grills, mixology cups, private spaces, and laughing crowds.
           </p>
         </div>
 
-        {/* Filter categories */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12">
+        {/* Filter tabs — scrollable on mobile */}
+        <div className="flex gap-2 overflow-x-auto pb-3 mb-7 scrollbar-none sm:justify-center sm:flex-wrap">
           {categories.map(cat => (
             <motion.button
               key={cat.value}
               id={`filter-btn-${cat.value}`}
               whileTap={{ scale: 0.94 }}
               onClick={() => setFilter(cat.value as any)}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-sans text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 relative cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full font-sans text-xs font-semibold tracking-wide uppercase transition-all duration-250 shrink-0 cursor-pointer ${
                 filter === cat.value
                   ? 'bg-accent-gold text-forest-dark font-bold shadow-lg'
-                  : 'bg-forest-dark/50 border border-cream/10 text-cream hover:bg-forest-light'
+                  : 'bg-forest-dark/50 border border-cream/10 text-cream/80'
               }`}
             >
-              {cat.label}
+              <span>{cat.emoji}</span>
+              <span>{cat.label}</span>
             </motion.button>
           ))}
         </div>
 
-        {/* CSS Masonry-styled organic grid */}
-        <motion.div 
-          layout
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
-        >
+        {/* Grid — 2 col on mobile, 3 on md, 4 on lg */}
+        <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
           <AnimatePresence mode="popLayout">
             {filteredItems.map((item, index) => {
-              // Custom spanning logic to simulate an organic masonry layout
               const isLarge = index === 1 || index === 5;
               return (
                 <motion.div
@@ -113,121 +111,108 @@ export default function Gallery() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 0.35 }}
                   id={`gallery-thumb-${item.id}`}
                   onClick={() => setLightboxIndex(index)}
-                  whileTap={{ scale: 0.97 }}
-                  className={`group relative overflow-hidden rounded-2xl cursor-zoom-in shadow-md border border-cream/5 aspect-square md:aspect-auto ${
-                    isLarge ? 'md:col-span-2 md:row-span-1 md:h-[420px]' : 'md:h-[260px]'
+                  whileTap={{ scale: 0.96 }}
+                  className={`group relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer border border-cream/5 hover:border-accent-gold/25 transition-all ${
+                    isLarge ? 'col-span-2 row-span-1' : ''
                   }`}
+                  style={{ aspectRatio: isLarge ? '2/1' : '1/1' }}
                 >
                   <img
                     src={item.image}
                     alt={item.title}
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                    className="w-full h-full object-cover transition-transform duration-600 ease-out group-hover:scale-110"
                   />
-                  
-                  {/* Subtle twilight glow overlay */}
-                  <div className="absolute inset-0 bg-forest-dark/30 group-hover:bg-forest-dark/75 opacity-70 group-hover:opacity-100 transition-all duration-300" />
-                  
-                  {/* Eyeball / Title Cover on hover */}
-                  <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 text-left opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-3 rounded-full bg-accent-gold/20 backdrop-blur-md border border-accent-gold text-accent-gold-light group-hover:scale-105 transition-transform duration-300">
-                      <Eye className="w-5 h-5 text-accent-gold" />
+
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-forest-dark/20 group-hover:bg-forest-dark/65 transition-all duration-300" />
+
+                  {/* Hover content */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2.5 rounded-full bg-accent-gold/25 backdrop-blur-md border border-accent-gold/60 text-accent-gold">
+                      <Eye className="w-4 h-4" />
                     </div>
-                    
-                    <span className="font-sans text-[10px] font-bold tracking-widest text-accent-gold uppercase mb-1">
-                      {item.category}
-                    </span>
-                    <h4 className="font-serif text-md sm:text-lg font-bold text-cream">
-                      {item.title}
-                    </h4>
+                    <span className="font-sans text-[9px] font-bold tracking-widest text-accent-gold uppercase">{item.category}</span>
+                    <h4 className="font-serif text-xs sm:text-sm font-bold text-cream leading-snug">{item.title}</h4>
                   </div>
                 </motion.div>
               );
             })}
           </AnimatePresence>
         </motion.div>
-
-        {/* Lightbox Modal Component */}
-        <AnimatePresence>
-          {lightboxIndex !== null && (
-            <motion.div
-              id="lightbox-overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setLightboxIndex(null)}
-              className="fixed inset-0 bg-black/98 z-50 flex items-center justify-center p-4 backdrop-blur-md"
-            >
-              {/* Close Button */}
-              <motion.button
-                id="btn-lightbox-close"
-                whileTap={{ scale: 0.85 }}
-                onClick={() => setLightboxIndex(null)}
-                className="absolute top-6 right-6 p-2 rounded-full bg-forest-dark/50 border border-cream/20 text-cream hover:text-accent-gold hover:border-accent-gold transition-colors block z-50 cursor-pointer"
-              >
-                <X className="w-6 h-6 sm:w-8 sm:h-8" />
-              </motion.button>
-
-              {/* Navigation Arrows */}
-              <motion.button
-                id="btn-lightbox-prev"
-                whileTap={{ scale: 0.85 }}
-                onClick={handlePrev}
-                className="absolute left-4 sm:left-8 p-3 rounded-full bg-forest-dark/40 border border-cream/10 text-cream hover:text-accent-gold transition-colors z-50 cursor-pointer"
-              >
-                <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
-              </motion.button>
-
-              <motion.button
-                id="btn-lightbox-next"
-                whileTap={{ scale: 0.85 }}
-                onClick={handleNext}
-                className="absolute right-4 sm:right-8 p-3 rounded-full bg-forest-dark/40 border border-cream/10 text-cream hover:text-accent-gold transition-colors z-50 cursor-pointer"
-              >
-                <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
-              </motion.button>
-
-              {/* Central Box */}
-              <motion.div
-                id="lightbox-content"
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-                onClick={(e) => e.stopPropagation()}
-                className="relative max-w-5xl max-h-[80vh] w-full flex flex-col justify-center items-center"
-              >
-                <div className="relative aspect-auto max-h-[70vh] rounded-xl overflow-hidden border border-cream/10 shadow-2xl bg-forest-dark">
-                  <img
-                    src={filteredItems[lightboxIndex]?.image}
-                    alt={filteredItems[lightboxIndex]?.title}
-                    referrerPolicy="no-referrer"
-                    className="object-contain max-h-[70vh] max-w-full block"
-                  />
-                </div>
-
-                {/* Lightbox Description Strip */}
-                <div className="mt-4 text-center max-w-xl text-cream px-2">
-                  <span className="font-sans text-xs font-semibold tracking-widest text-accent-gold uppercase block mb-1">
-                    {filteredItems[lightboxIndex]?.category}
-                  </span>
-                  <h3 className="font-serif text-lg sm:text-xl font-bold mb-1">
-                    {filteredItems[lightboxIndex]?.title}
-                  </h3>
-                  {filteredItems[lightboxIndex]?.description && (
-                    <p className="font-sans text-xs sm:text-sm text-cream-dark/80">
-                      {filteredItems[lightboxIndex].description}
-                    </p>
-                  )}
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <motion.div
+            id="lightbox-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightboxIndex(null)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="fixed inset-0 bg-black/97 z-50 flex items-center justify-center p-4 backdrop-blur-md"
+          >
+            {/* Close */}
+            <button
+              id="btn-lightbox-close"
+              onClick={() => setLightboxIndex(null)}
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2.5 rounded-full bg-forest-dark/60 border border-cream/20 text-cream hover:text-accent-gold transition-colors z-50 cursor-pointer"
+            >
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+
+            {/* Nav arrows */}
+            <button
+              id="btn-lightbox-prev"
+              onClick={handlePrev}
+              className="absolute left-2 sm:left-6 p-2.5 sm:p-3 rounded-full bg-forest-dark/50 border border-cream/10 text-cream hover:text-accent-gold transition-colors z-50 cursor-pointer"
+            >
+              <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7" />
+            </button>
+            <button
+              id="btn-lightbox-next"
+              onClick={handleNext}
+              className="absolute right-2 sm:right-6 p-2.5 sm:p-3 rounded-full bg-forest-dark/50 border border-cream/10 text-cream hover:text-accent-gold transition-colors z-50 cursor-pointer"
+            >
+              <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7" />
+            </button>
+
+            {/* Image */}
+            <motion.div
+              id="lightbox-content"
+              initial={{ scale: 0.94, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.94, opacity: 0 }}
+              transition={{ type: 'spring', damping: 26, stiffness: 220 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-4xl w-full flex flex-col items-center gap-4"
+            >
+              <div className="rounded-xl overflow-hidden border border-cream/10 shadow-2xl">
+                <img
+                  src={filteredItems[lightboxIndex]?.image}
+                  alt={filteredItems[lightboxIndex]?.title}
+                  referrerPolicy="no-referrer"
+                  className="object-contain max-h-[70vh] max-w-full block"
+                />
+              </div>
+              <div className="text-center text-cream">
+                <span className="font-sans text-[10px] font-bold tracking-widest text-accent-gold uppercase block">{filteredItems[lightboxIndex]?.category}</span>
+                <h3 className="font-serif text-base sm:text-lg font-bold">{filteredItems[lightboxIndex]?.title}</h3>
+                {filteredItems[lightboxIndex]?.description && (
+                  <p className="font-sans text-xs text-cream-dark/75 mt-1">{filteredItems[lightboxIndex].description}</p>
+                )}
+              </div>
+              <p className="font-sans text-[10px] text-cream/30 sm:hidden">Swipe to navigate</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

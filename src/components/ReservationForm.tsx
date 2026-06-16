@@ -153,21 +153,21 @@ export default function ReservationForm({ bookingSubject, defaultDate, onClearSu
   };
 
   return (
-    <section id="reservation" className="py-24 sm:py-32 bg-forest relative overflow-hidden">
+    <section id="reservation" className="py-16 sm:py-28 bg-forest relative overflow-hidden">
       {/* Background patterns */}
       <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-forest-dark/10 rounded-full filter blur-[150px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-10 w-96 h-96 bg-accent-gold/5 rounded-full filter blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-center">
           
           {/* Left Side Info / Context (5 cols on lg) */}
           <div className="lg:col-span-5 text-left flex flex-col items-start lg:pr-6">
-            <span className="font-sans text-xs sm:text-sm font-bold tracking-[0.3em] text-accent-gold uppercase mb-4">
-              Secures Your Table
-            </span>
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-cream tracking-tight mb-8 leading-[1.15]">
-              Reserve Your Premium <span className="text-accent-gold-light font-serif italic">Moment</span>
+            <div className="section-label mb-4">
+              <span>🍽️</span> Secures Your Table
+            </div>
+            <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-cream tracking-tight mb-5 leading-[1.15]">
+              Reserve Your Premium{' '}<span className="text-accent-gold-light font-serif italic">Moment</span>
             </h2>
             
             <p className="font-sans text-cream-dark/90 leading-relaxed mb-8">
@@ -210,7 +210,7 @@ export default function ReservationForm({ bookingSubject, defaultDate, onClearSu
 
           {/* Right Side: Visual Form & Ticket Holder (7 cols on lg) */}
           <div className="lg:col-span-7 w-full max-w-[620px] mx-auto lg:mx-0">
-            <div className="bg-forest-dark/75 border border-cream/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-md">
+            <div className="glass-card rounded-3xl p-5 sm:p-10 shadow-2xl relative overflow-hidden">
               
               <AnimatePresence mode="wait">
                 {!success ? (
@@ -364,18 +364,18 @@ export default function ReservationForm({ bookingSubject, defaultDate, onClearSu
                         <label className="block font-sans text-xs font-bold uppercase tracking-wider text-cream/80 mb-3">
                           Number of Guests *
                         </label>
-                        <div className="flex items-center space-x-4 bg-forest border border-cream/10 rounded-xl p-2 w-full max-w-[280px]">
+                        <div className="flex items-center gap-4 bg-forest border border-cream/10 rounded-xl p-2 w-full max-w-[300px]">
                           <button
                             type="button"
                             onClick={() => handleGuestsChange(-1)}
-                            className="w-10 h-10 rounded-lg bg-forest-dark border border-cream/10 text-cream hover:text-accent-gold hover:border-accent-gold font-bold text-lg flex items-center justify-center transition-colors cursor-pointer select-none"
+                            className="w-12 h-12 rounded-lg bg-forest-dark border border-cream/10 text-cream hover:text-accent-gold hover:border-accent-gold font-bold text-xl flex items-center justify-center transition-colors cursor-pointer select-none touch-active"
                           >
-                            -
+                            −
                           </button>
                           
-                          <div className="flex-1 text-center flex items-center justify-center space-x-2">
+                          <div className="flex-1 text-center flex items-center justify-center gap-2">
                             <Users className="w-4 h-4 text-accent-gold" />
-                            <span className="font-sans font-bold text-cream text-lg pr-1">
+                            <span className="font-sans font-bold text-cream text-lg">
                               {formData.guests}
                             </span>
                             <span className="font-sans text-xs text-cream/50 uppercase font-semibold">
@@ -386,7 +386,7 @@ export default function ReservationForm({ bookingSubject, defaultDate, onClearSu
                           <button
                             type="button"
                             onClick={() => handleGuestsChange(1)}
-                            className="w-10 h-10 rounded-lg bg-forest-dark border border-cream/10 text-cream hover:text-accent-gold hover:border-accent-gold font-bold text-lg flex items-center justify-center transition-colors cursor-pointer select-none"
+                            className="w-12 h-12 rounded-lg bg-forest-dark border border-cream/10 text-cream hover:text-accent-gold hover:border-accent-gold font-bold text-xl flex items-center justify-center transition-colors cursor-pointer select-none touch-active"
                           >
                             +
                           </button>

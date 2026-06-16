@@ -16,39 +16,30 @@ import Testimonials from './components/Testimonials';
 import ReservationForm from './components/ReservationForm';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { MessageSquare } from 'lucide-react';
 
 export default function App() {
-  // Supports RSVP-prefilling across components
   const [bookingSubject, setBookingSubject] = useState<string>('');
   const [bookingDate, setBookingDate] = useState<string>('');
 
   const scrollToSection = (selector: string) => {
     const element = document.querySelector(selector);
     if (element) {
-      const offset = 80; // approximate navbar height
+      const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
       const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
   };
 
-  const handleOpenBooking = () => {
-    scrollToSection('#reservation');
-  };
-
-  const handleViewMenu = () => {
-    scrollToSection('#menu');
-  };
+  const handleOpenBooking = () => scrollToSection('#reservation');
+  const handleViewMenu = () => scrollToSection('#menu');
 
   const handleReserveItem = (itemName: string) => {
     setBookingSubject(itemName);
-    setBookingDate(''); // clear date
+    setBookingDate('');
     scrollToSection('#reservation');
   };
 
@@ -63,50 +54,45 @@ export default function App() {
     setBookingDate('');
   };
 
+  const whatsappUrl = `https://wa.me/2348031234567?text=Hello%20Nature%20Udoh%20and%20The%20Gang!%20I'd%20love%20to%20reserve%20a%20table%20or%20inquire%20about%20hosting%20an%20event%20with%20you.`;
+
   return (
     <div className="bg-forest min-h-screen text-cream antialiased font-sans selection:bg-accent-gold selection:text-forest-dark">
-      {/* Navigation Layer */}
+
+      {/* Navigation */}
       <Navigation onOpenBooking={handleOpenBooking} />
 
-      {/* Main Sections Assembly */}
+      {/* Main content — add bottom padding on mobile for bottom nav bar */}
       <main className="overflow-hidden">
-        {/* Cinematic Welcome Header */}
         <Hero onOpenBooking={handleOpenBooking} onViewMenu={handleViewMenu} />
-
-        {/* Brand Foundation & Story */}
         <About />
-
-        {/* Premium Offerings Directory */}
         <Services />
-
-        {/* High-Fidelity Multi-Dimensional Experiences */}
         <SignatureExperiences />
-
-        {/* Categories Sökel Tabs & Items */}
         <MenuPreview onReserveItem={handleReserveItem} />
-
-        {/* Interactive Friday/Sunday Calendars */}
         <Events onBookEvent={handleBookEvent} />
-
-        {/* Masonry Organic Image Grid & Overlay Lightbox */}
         <Gallery />
-
-        {/* star-reviews Customer Carousels */}
         <Testimonials />
-
-        {/* Premium Reservation Ticket Box */}
         <ReservationForm
           bookingSubject={bookingSubject}
           defaultDate={bookingDate}
           onClearSubject={handleClearSubject}
         />
-
-        {/* HQ Address, Direct WhatsApp & stylized Google Maps Iframe */}
         <Contact />
       </main>
 
-      {/* Legal terms, Closing timings & Directories */}
       <Footer onQuickLinkClick={scrollToSection} />
+
+      {/* Floating WhatsApp button — above bottom nav on mobile */}
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noreferrer"
+        id="btn-whatsapp-float"
+        aria-label="Chat on WhatsApp"
+        className="whatsapp-float lg:hidden"
+      >
+        <MessageSquare className="w-6 h-6 text-white" />
+      </a>
     </div>
   );
 }

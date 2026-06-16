@@ -5,114 +5,104 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { Check, Flame } from 'lucide-react';
+import { Check, Flame, ChevronRight } from 'lucide-react';
 import { signatureExperiences } from '../data';
 
 export default function SignatureExperiences() {
   return (
-    <section id="experiences" className="py-24 sm:py-32 bg-forest-dark relative overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute top-1/3 left-0 w-80 h-80 bg-forest-light/5 rounded-full filter blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-accent-gold/5 rounded-full filter blur-[150px] pointer-events-none" />
+    <section id="experiences" className="py-16 sm:py-28 bg-forest-dark relative overflow-hidden">
+      <div className="absolute top-1/3 left-0 w-72 h-72 bg-forest-light/5 rounded-full filter blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-0 w-[400px] h-[400px] bg-accent-gold/5 rounded-full filter blur-[130px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 sm:mb-28">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="font-sans text-xs sm:text-sm font-bold tracking-[0.3em] text-accent-gold uppercase"
+            className="section-label mx-auto"
           >
+            <Flame className="w-3 h-3" />
             The Gang Experience
-          </motion.span>
+          </motion.div>
           <motion.h2
             id="experiences-heading"
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-serif text-3xl sm:text-5xl font-bold text-cream tracking-tight mt-3 mb-6"
+            className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-cream tracking-tight mt-2 mb-3"
           >
             Signature Dimensions of Nature Udoh
           </motion.h2>
-          <div className="w-24 h-1 bg-accent-gold mx-auto rounded" />
+          <div className="section-divider" />
         </div>
 
         {/* Experience Blocks */}
-        <div className="space-y-24 sm:space-y-36">
+        <div className="space-y-16 sm:space-y-28">
           {signatureExperiences.map((exp, index) => {
             const isEven = index % 2 === 0;
             return (
-              <div
-                key={exp.id}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center overflow-hidden`}
-              >
-                {/* Image side - alternates order on large screens */}
+              <div key={exp.id} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+                
+                {/* Image */}
                 <motion.div
-                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                  initial={{ opacity: 0, x: isEven ? -40 : 40 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  transition={{ duration: 0.8 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.7 }}
                   className={`lg:col-span-6 relative ${isEven ? 'lg:order-first' : 'lg:order-last'}`}
                 >
                   <motion.div
-                    whileHover={{ scale: 1.03, y: -6 }}
-                    transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-                    className="relative aspect-video sm:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-cream/5 lg:p-1 lg:bg-cream/5 cursor-pointer group"
+                    whileHover={{ scale: 1.02, y: -4 }}
+                    transition={{ type: 'spring', stiffness: 350, damping: 26 }}
+                    className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-cream/5 group cursor-pointer"
+                    style={{ aspectRatio: '4/3' }}
                   >
                     <img
                       src={exp.image}
                       alt={exp.title}
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-600 ease-out"
                     />
-                    
-                    {/* Floating Tag */}
-                    <div className="absolute top-4 left-4 sm:top-6 sm:left-6 bg-forest-dark/90 border border-accent-gold/40 px-4 py-2 rounded-xl backdrop-blur-md flex items-center space-x-1.5 shadow-lg">
-                      <Flame className="w-3.5 h-3.5 text-accent-gold" />
-                      <span className="font-sans text-xs font-bold text-cream uppercase tracking-wider">
-                        {exp.tag}
-                      </span>
-                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/40 to-transparent" />
 
-                    {/* Ambient light glow behind image */}
-                    <div className="absolute -inset-4 bg-gradient-to-tr from-accent-gold/5 to-transparent z-[-1] blur-xl rounded-3xl" />
+                    {/* Floating tag */}
+                    <div className="absolute top-4 left-4 glass-card-gold px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow-lg">
+                      <Flame className="w-3.5 h-3.5 text-accent-gold" />
+                      <span className="font-sans text-xs font-bold text-cream uppercase tracking-wider">{exp.tag}</span>
+                    </div>
                   </motion.div>
                 </motion.div>
 
-                {/* Text side */}
+                {/* Text */}
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  transition={{ duration: 0.7, delay: 0.2 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.6, delay: 0.15 }}
                   className="lg:col-span-6 flex flex-col items-start text-left"
                 >
-                  <span className="font-sans text-xs sm:text-sm font-semibold tracking-widest text-accent-gold uppercase mb-2">
+                  <span className="font-sans text-[10px] sm:text-xs font-bold tracking-[0.25em] text-accent-gold uppercase mb-2">
                     {exp.subtitle}
                   </span>
-                  
-                  <h3 className="font-serif text-2xl sm:text-4xl font-bold text-cream leading-tight mb-6">
+                  <h3 className="font-serif text-xl sm:text-3xl font-bold text-cream leading-tight mb-4">
                     {exp.title}
                   </h3>
-                  
-                  <p className="font-sans text-sm sm:text-base text-cream-dark/90 leading-relaxed mb-8">
+                  <p className="font-sans text-sm text-cream-dark/85 leading-relaxed mb-6">
                     {exp.description}
                   </p>
 
-                  {/* Bullet features list */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                    {exp.features.map((feature, fIndex) => (
-                      <div key={fIndex} className="flex items-center space-x-3 text-left">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-accent-gold/10 border border-accent-gold/30 flex items-center justify-center text-accent-gold">
+                  {/* Features */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+                    {exp.features.map((feature, i) => (
+                      <div key={i} className="flex items-center gap-2.5">
+                        <div className="w-5 h-5 rounded-full bg-accent-gold/12 border border-accent-gold/30 flex items-center justify-center text-accent-gold shrink-0">
                           <Check className="w-3 h-3" />
                         </div>
-                        <span className="font-sans text-xs sm:text-sm text-cream-dark/90 font-medium">
-                          {feature}
-                        </span>
+                        <span className="font-sans text-xs sm:text-sm text-cream-dark/85 font-medium">{feature}</span>
                       </div>
                     ))}
                   </div>

@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { BookOpen, Calendar, ChevronDown, Flame } from 'lucide-react';
+import { BookOpen, Calendar, ChevronDown, Flame, Star } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface HeroProps {
@@ -14,122 +14,144 @@ interface HeroProps {
 
 export default function Hero({ onOpenBooking, onViewMenu }: HeroProps) {
   return (
-    <section id="home" className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-      {/* Background Image with Premium Dark Overlay and Green Tint */}
+    <section id="home" className="relative min-h-screen w-full flex items-end sm:items-center justify-center overflow-hidden pb-28 sm:pb-0">
+      {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=1920&q=80"
           alt="Nature Udoh and The Gang Venue"
           referrerPolicy="no-referrer"
-          className="w-full h-full object-cover scale-105 filter brightness-[0.45]"
+          className="w-full h-full object-cover scale-105 brightness-[0.4]"
         />
-        {/* Layer 1: Dark rich radial overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-forest-dark/95 via-forest-dark/80 sm:via-forest-dark/70 to-transparent" />
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-forest-dark/80 via-forest-dark/40 to-forest-dark/90 sm:bg-gradient-to-r sm:from-forest-dark/95 sm:via-forest-dark/75 sm:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark via-transparent to-black/40" />
+
+        {/* Ambient glow */}
+        <div className="absolute top-1/3 left-1/3 w-72 h-72 sm:w-96 sm:h-96 bg-accent-gold/8 rounded-full filter blur-[100px] pointer-events-none" />
         
-        {/* Layer 2: Deep Forest-Dark Vignette at the bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark via-transparent to-black/50" />
-
-        {/* Dynamic ambient green aura */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-forest-light/10 rounded-full filter blur-[120px] pointer-events-none" />
-
-        {/* Floating starlight particles for mobile & desktop magic */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-1">
-          <div className="absolute top-1/4 left-[15%] w-2.5 h-2.5 rounded-full bg-accent-gold/40 animate-pulse duration-5000 filter blur-[0.5px]" />
-          <div className="absolute top-1/3 right-[20%] w-1.5 h-1.5 rounded-full bg-accent-gold/60 animate-ping duration-3000" />
-          <div className="absolute bottom-1/3 left-[40%] w-2 h-2 rounded-full bg-accent-gold/50 animate-pulse duration-[7000s]" />
-          <div className="absolute bottom-1/4 right-[35%] w-2.5 h-2.5 rounded-full bg-accent-gold/30 filter blur-[1px] animate-pulse" />
+        {/* Floating particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-[15%] w-2 h-2 rounded-full bg-accent-gold/50 animate-pulse" />
+          <div className="absolute top-1/3 right-[20%] w-1.5 h-1.5 rounded-full bg-accent-gold/70 animate-ping" style={{ animationDuration: '3s' }} />
+          <div className="absolute bottom-1/3 left-[40%] w-2 h-2 rounded-full bg-accent-gold/40 animate-pulse" style={{ animationDuration: '5s' }} />
+          <div className="absolute top-1/2 right-[35%] w-1 h-1 rounded-full bg-cream/40 animate-pulse" style={{ animationDuration: '4s' }} />
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col items-center sm:items-start w-full">
-        {/* Sparkly Top Badge */}
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pb-12 sm:pb-0 pt-24 sm:pt-0 flex flex-col items-center sm:items-start text-center sm:text-left">
+        
+        {/* Badge */}
         <motion.div
           id="hero-badge"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-          className="inline-flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-forest-dark/90 border border-accent-gold/30 backdrop-blur-md mb-6"
+          transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-forest-dark/80 border border-accent-gold/35 backdrop-blur-md mb-5 sm:mb-6"
         >
-          <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-gold animate-pulse" />
-          <span className="font-sans text-[10px] xs:text-xs sm:text-sm font-semibold tracking-wider text-cream uppercase">
-            Barbecue • Garden Lounge • Live Entertainment
+          <Flame className="w-3.5 h-3.5 text-accent-gold animate-pulse" />
+          <span className="font-sans text-[10px] sm:text-xs font-bold tracking-[0.2em] text-cream uppercase">
+            Barbecue · Garden Lounge · Live Entertainment
           </span>
         </motion.div>
- 
-        {/* Large Headline */}
+
+        {/* Rating stars — mobile trust signal */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex items-center gap-2 mb-4 sm:mb-5"
+        >
+          <div className="flex">
+            {[1,2,3,4,5].map(i => (
+              <Star key={i} className="w-3.5 h-3.5 fill-accent-gold text-accent-gold" />
+            ))}
+          </div>
+          <span className="font-sans text-xs text-cream/70 font-medium">4.9 · 500+ happy guests</span>
+        </motion.div>
+
+        {/* Headline */}
         <motion.h1
           id="hero-heading"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut', delay: 0.4 }}
-          className="font-serif text-[2.2rem] xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-rose-50 mb-5 tracking-tight max-w-4xl text-left leading-[1.1] text-balance"
+          className="hero-title font-serif text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-rose-50 mb-4 sm:mb-5 tracking-tight leading-[1.08] text-balance"
         >
-          Welcome to <br />
-          <span className="text-gold-metallic filter drop-shadow">Nature Udoh</span> <br />
-          <span className="text-cream font-medium">& The Gang</span>
+          Welcome to<br />
+          <span className="shimmer-gold filter drop-shadow">Nature Udoh</span>{' '}
+          <span className="text-cream font-medium">&amp; The Gang</span>
         </motion.h1>
- 
-        {/* Subheadline */}
+
+        {/* Subheading */}
         <motion.p
           id="hero-subheading"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.6 }}
-          className="font-sans text-sm sm:text-lg md:text-xl text-cream-dark/90 leading-relaxed max-w-2xl mb-8 text-left text-balance"
+          transition={{ duration: 0.7, ease: 'easeOut', delay: 0.55 }}
+          className="font-sans text-sm sm:text-lg text-cream-dark/85 leading-relaxed max-w-xl mb-8 sm:mb-10 text-balance"
         >
-          Where Great Food, Live Entertainment, Premium Drinks, and Unforgettable Moments Come Together.
+          Where Great Food, Live Entertainment, Premium Drinks, and Unforgettable Moments Come Together in Lekki, Lagos.
         </motion.p>
- 
+
         {/* CTA Buttons */}
         <motion.div
           id="hero-actions"
-          initial={{ opacity: 0, y: 35 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.8 }}
-          className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 w-full sm:w-auto"
+          transition={{ duration: 0.7, ease: 'easeOut', delay: 0.7 }}
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
         >
           <motion.button
             id="hero-btn-book"
             onClick={onOpenBooking}
-            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.96 }}
-            className="flex items-center justify-center space-x-2 bg-accent-gold hover:bg-accent-gold-light text-forest-dark font-sans font-bold text-sm sm:text-base md:text-lg px-8 py-3.5 sm:py-4 rounded-xl shadow-2xl transition-colors tracking-wider uppercase cursor-pointer"
+            className="flex items-center justify-center gap-2.5 bg-accent-gold hover:bg-accent-gold-light text-forest-dark font-sans font-extrabold text-sm sm:text-base px-8 py-4 rounded-2xl shadow-2xl transition-colors tracking-wider uppercase cursor-pointer touch-active"
+            style={{ boxShadow: '0 8px 32px rgba(212,160,23,0.4)' }}
           >
-            <Calendar className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+            <Calendar className="w-4.5 h-4.5" />
             <span>Book a Table</span>
           </motion.button>
           
           <motion.button
             id="hero-btn-menu"
             onClick={onViewMenu}
-            whileHover={{ scale: 1.02, backgroundColor: 'rgba(255, 253, 245, 0.08)' }}
             whileTap={{ scale: 0.96 }}
-            className="flex items-center justify-center space-x-2 bg-transparent text-cream font-sans font-semibold text-sm sm:text-base md:text-lg px-8 py-3.5 sm:py-4 rounded-xl border border-cream/40 hover:border-accent-gold transition-colors tracking-wider uppercase cursor-pointer backdrop-blur-sm"
+            className="flex items-center justify-center gap-2.5 bg-white/8 text-cream font-sans font-semibold text-sm sm:text-base px-8 py-4 rounded-2xl border border-cream/30 hover:border-accent-gold hover:bg-white/12 transition-all tracking-wider uppercase cursor-pointer backdrop-blur-sm touch-active"
           >
-            <BookOpen className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+            <BookOpen className="w-4.5 h-4.5" />
             <span>View Menu</span>
           </motion.button>
         </motion.div>
+
+        {/* Mobile trust badges */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.1 }}
+          className="flex items-center gap-4 mt-6 sm:mt-8"
+        >
+          {['Free Booking', 'No Deposit', 'Cancel Anytime'].map((badge) => (
+            <div key={badge} className="flex items-center gap-1.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
+              <span className="font-sans text-[10px] sm:text-xs text-cream/60 font-medium">{badge}</span>
+            </div>
+          ))}
+        </motion.div>
       </div>
 
-      {/* Down arrow indicator */}
+      {/* Scroll indicator */}
       <motion.div
         id="hero-scroller"
         initial={{ opacity: 0 }}
         animate={{ opacity: [0, 1, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center cursor-pointer"
-        onClick={() => {
-          const nextSection = document.querySelector('#about');
-          if (nextSection) {
-            nextSection.scrollIntoView({ behavior: 'smooth' });
-          }
-        }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        className="absolute bottom-24 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center cursor-pointer"
+        onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
       >
-        <span className="font-sans text-xs text-cream/50 tracking-widest uppercase mb-2">
-          Discover Nature
-        </span>
-        <ChevronDown className="w-6 h-6 text-accent-gold" />
+        <span className="font-sans text-[10px] text-cream/40 tracking-widest uppercase mb-1.5">Discover</span>
+        <ChevronDown className="w-5 h-5 text-accent-gold" />
       </motion.div>
     </section>
   );

@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Flame } from 'lucide-react';
+import { Menu, X, Flame, Home, UtensilsCrossed, CalendarDays, Image, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface NavigationProps {
@@ -14,16 +14,23 @@ interface NavigationProps {
 export default function Navigation({ onOpenBooking }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      setIsScrolled(window.scrollY > 50);
+
+      // Detect active section for bottom nav
+      const sections = ['home', 'menu', 'events', 'gallery', 'contact'];
+      for (const id of sections.reverse()) {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 200) {
+          setActiveSection(id);
+          break;
+        }
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -39,55 +46,61 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
     { name: 'Contact', href: '#contact' }
   ];
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  const bottomNavItems = [
+    { id: 'home', icon: Home, label: 'Home', href: '#home' },
+    { id: 'menu', icon: UtensilsCrossed, label: 'Menu', href: '#menu' },
+    { id: 'events', icon: CalendarDays, label: 'Events', href: '#events' },
+    { id: 'gallery', icon: Image, label: 'Gallery', href: '#gallery' },
+    { id: 'contact', icon: Phone, label: 'Contact', href: '#contact' },
+  ];
+
+  const scrollTo = (href: string) => {
     setIsOpen(false);
     const element = document.querySelector(href);
     if (element) {
-      const offset = 80; // height of navbar
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      const offset = 80;
+      const top = element.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
+  };
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    scrollTo(href);
   };
 
   return (
     <>
+      {/* ── Top Navbar ── */}
       <motion.nav
         id="navbar-main"
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-forest-dark/95 border-b border-accent-gold/20 shadow-xl backdrop-blur-md py-4'
-            : 'bg-transparent py-6'
+            ? 'bg-forest-dark/96 border-b border-accent-gold/20 shadow-xl backdrop-blur-md py-3'
+            : 'bg-transparent py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Brand Logo */}
             <a href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="flex items-center space-x-2 group">
-              <div className="relative p-2 bg-accent-gold rounded-xl group-hover:bg-accent-gold-light transition-colors duration-300">
-                <Flame className="w-6 h-6 text-forest-dark" />
+              <div className="relative p-2 bg-accent-gold rounded-xl group-hover:bg-accent-gold-light transition-colors duration-300 pulse-gold">
+                <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-forest-dark" />
               </div>
               <div className="flex flex-col">
-                <span className="font-serif text-lg sm:text-xl font-bold text-cream tracking-wider leading-none uppercase">
+                <span className="font-serif text-base sm:text-xl font-bold text-cream tracking-wider leading-none uppercase">
                   Nature Udoh
                 </span>
-                <span className="font-sans text-xs text-accent-gold-light font-medium tracking-[0.25em] leading-none mt-1">
+                <span className="font-sans text-[9px] sm:text-xs text-accent-gold-light font-medium tracking-[0.25em] leading-none mt-0.5">
                   & THE GANG
                 </span>
               </div>
             </a>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation Links */}
             <div className="hidden lg:flex items-center space-x-8">
               <div className="flex space-x-6">
                 {navLinks.map((link) => (
@@ -95,14 +108,13 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
                     key={link.name}
                     href={link.href}
                     onClick={(e) => handleLinkClick(e, link.href)}
-                    className="font-sans text-sm font-medium text-cream/82 hover:text-accent-gold transition-colors duration-200 relative group py-2"
+                    className="font-sans text-sm font-medium text-cream/80 hover:text-accent-gold transition-colors duration-200 relative group py-2"
                   >
                     {link.name}
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-gold transition-all duration-300 group-hover:w-full" />
                   </a>
                 ))}
               </div>
-              
               <button
                 id="btn-nav-book-desktop"
                 onClick={onOpenBooking}
@@ -112,13 +124,20 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
               </button>
             </div>
 
-            {/* Mobile menu button */}
-            <div className="flex lg:hidden items-center">
+            {/* Mobile: Book CTA + Hamburger */}
+            <div className="flex lg:hidden items-center space-x-2">
+              <button
+                id="btn-nav-book-mobile-top"
+                onClick={onOpenBooking}
+                className="bg-accent-gold text-forest-dark font-sans font-bold text-xs px-4 py-2 rounded-full uppercase tracking-wider cursor-pointer touch-active active:scale-95 transition-transform"
+              >
+                Book
+              </button>
               <motion.button
                 id="btn-mobile-menu-toggle"
                 whileTap={{ scale: 0.88 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-lg text-cream hover:text-accent-gold focus:outline-none transition-colors"
+                className="p-2 rounded-lg text-cream hover:text-accent-gold focus:outline-none transition-colors"
                 aria-label="Toggle menu"
               >
                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -128,7 +147,7 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Panel */}
+      {/* ── Mobile Drawer ── */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -137,45 +156,43 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsOpen(false)}
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden"
           >
             <motion.div
               id="mobile-drawer-content"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 26, stiffness: 220 }}
+              transition={{ type: 'spring', damping: 28, stiffness: 240 }}
               onClick={(e) => e.stopPropagation()}
-              className="absolute right-0 top-0 bottom-0 w-4/5 max-w-sm bg-forest-dark p-6 shadow-2xl flex flex-col h-full border-l border-accent-gold/20"
+              className="absolute right-0 top-0 bottom-0 w-4/5 max-w-[320px] bg-forest-dark flex flex-col h-full border-l border-accent-gold/20 shadow-2xl"
             >
-              <div className="flex justify-between items-center mb-8 pb-4 border-b border-cream/10">
+              {/* Drawer Header */}
+              <div className="flex justify-between items-center px-6 py-5 border-b border-cream/10">
                 <div className="flex items-center space-x-2">
-                  <Flame className="w-5 h-5 text-accent-gold animate-pulse" />
-                  <span className="font-serif text-md font-bold text-cream tracking-wide">
-                    NATURE UDOH & GANG
+                  <div className="p-1.5 bg-accent-gold rounded-lg">
+                    <Flame className="w-4 h-4 text-forest-dark" />
+                  </div>
+                  <span className="font-serif text-sm font-bold text-cream tracking-wide uppercase">
+                    Nature Udoh
                   </span>
                 </div>
                 <motion.button
                   id="btn-mobile-drawer-close"
                   whileTap={{ scale: 0.85 }}
                   onClick={() => setIsOpen(false)}
-                  className="p-1 rounded-full text-cream/70 hover:text-accent-gold transition-colors"
+                  className="p-1.5 rounded-full bg-forest/40 text-cream/70 hover:text-accent-gold transition-colors"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5" />
                 </motion.button>
               </div>
 
-              <motion.div 
-                className="flex-1 flex flex-col space-y-4 overflow-y-auto pr-2"
+              {/* Drawer Links */}
+              <motion.div
+                className="flex-1 overflow-y-auto py-4 px-4"
                 variants={{
                   hidden: { opacity: 0 },
-                  show: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.08,
-                      delayChildren: 0.1
-                    }
-                  }
+                  show: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.05 } }
                 }}
                 initial="hidden"
                 animate="show"
@@ -186,34 +203,63 @@ export default function Navigation({ onOpenBooking }: NavigationProps) {
                     href={link.href}
                     onClick={(e) => handleLinkClick(e, link.href)}
                     variants={{
-                      hidden: { opacity: 0, x: 20 },
-                      show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 300, damping: 25 } }
+                      hidden: { opacity: 0, x: 24 },
+                      show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 320, damping: 26 } }
                     }}
-                    whileTap={{ scale: 0.98, x: 5, color: '#bf9534' }}
-                    className="font-sans text-lg font-medium text-cream/90 hover:text-accent-gold py-2 transition-all block border-b border-cream/5 text-left"
+                    whileTap={{ scale: 0.97, x: 4 }}
+                    className="flex items-center justify-between font-sans text-base font-medium text-cream/90 hover:text-accent-gold py-3.5 border-b border-cream/5 last:border-b-0 transition-colors"
                   >
-                    {link.name}
+                    <span>{link.name}</span>
+                    <span className="text-accent-gold/40 text-xs">→</span>
                   </motion.a>
                 ))}
               </motion.div>
 
-              <div className="pt-6 border-t border-cream/10 mt-auto">
+              {/* Drawer Footer CTA */}
+              <div className="p-5 border-t border-cream/10 space-y-3">
                 <motion.button
-                  id="btn-nav-book-mobile"
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    setIsOpen(false);
-                    onOpenBooking();
-                  }}
-                  className="w-full bg-accent-gold hover:bg-accent-gold-light text-forest-dark font-sans font-bold text-md py-3 rounded-xl shadow-lg transition-colors uppercase tracking-wider text-center"
+                  id="btn-nav-book-mobile-drawer"
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => { setIsOpen(false); onOpenBooking(); }}
+                  className="w-full bg-accent-gold hover:bg-accent-gold-light text-forest-dark font-sans font-bold text-sm py-4 rounded-2xl shadow-lg transition-colors uppercase tracking-wider cursor-pointer"
                 >
-                  Book a Table
+                  🍖 Book a Table Now
                 </motion.button>
+                <p className="text-center font-sans text-xs text-cream/40">Free • No credit card required</p>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ── Mobile Bottom Navigation Bar ── */}
+      <nav className="mobile-bottom-nav lg:hidden" aria-label="Bottom navigation">
+        <div className="flex items-center justify-around px-2 pt-2 pb-1">
+          {bottomNavItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeSection === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.href)}
+                className={`flex flex-col items-center justify-center gap-0.5 px-3 py-1.5 rounded-xl transition-all duration-200 touch-active ${
+                  isActive ? 'text-accent-gold' : 'text-cream/50'
+                }`}
+              >
+                <div className={`p-1.5 rounded-lg transition-all duration-200 ${isActive ? 'bg-accent-gold/15' : ''}`}>
+                  <Icon className={`transition-all duration-200 ${isActive ? 'w-5 h-5' : 'w-5 h-5'}`} />
+                </div>
+                <span className={`text-[10px] font-semibold tracking-wide transition-all duration-200 ${isActive ? 'opacity-100' : 'opacity-60'}`}>
+                  {item.label}
+                </span>
+                {isActive && (
+                  <motion.div layoutId="bottomNavIndicator" className="w-1 h-1 rounded-full bg-accent-gold mt-0.5" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </nav>
     </>
   );
 }
