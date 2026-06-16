@@ -27,7 +27,7 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsSplashActive(false);
-    }, 2500); // 2.5 seconds
+    }, 5000); // 5 seconds
     return () => clearTimeout(timer);
   }, []);
 
